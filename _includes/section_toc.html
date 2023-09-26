@@ -1,0 +1,9 @@
+[Exercise material for this section]({{site.exercises_repo}}/hands-on/{{ page.section }}).
+
+{% for toplevel in site.menu %}
+  {% if toplevel.name == page.section %}
+    {% for item in toplevel.items %}
+- <a href="{{site.baseurl}}/{{page.section}}/{{item.name}}.html">{{ item.label }}</a>
+    {% endfor %}
+  {% endif %}
+{% endfor %}
