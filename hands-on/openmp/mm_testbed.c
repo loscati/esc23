@@ -70,4 +70,8 @@ int main(int argc, char **argv)
    printf(" triple loop, ijk case %d %d %d\n", Ndim, Mdim, Pdim);
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_ijk);
 
+   free(A);
+   free(B);
+   free(C);
+
 }

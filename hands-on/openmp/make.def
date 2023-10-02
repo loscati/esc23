@@ -1,9 +1,9 @@
 # Makefile definitions.  Comment out the one
 # you wish to use:
 
-# gcc-9 for Linux or Apple (note on Apple .. the gcc you get by default 
+# gcc-13 for Linux or Apple (note on Apple .. the gcc you get by default 
 # connects to their clang compiler which does not include OpenMP
-CC          = gcc-9
+CC          = gcc-13
 
 # Intel Compiler
 #CC          = icc

@@ -299,6 +299,10 @@ int pointFunc(float *val)  // I pass in the address of val
 // talk about how difficult it is to work with C, they most often
 // are referring to how messy things get with pointers.
 
+// when I am done, I should return the memory I allocated with free
+
+//   free(array);
+
    return sum;
 }
 

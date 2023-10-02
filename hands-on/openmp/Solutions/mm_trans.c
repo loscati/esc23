@@ -94,6 +94,7 @@ for (i=0; i<Pdim*Mdim; i++)
           }
        }
    }
+   free(Bwrk);
    return 1;
 }
 

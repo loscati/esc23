@@ -85,4 +85,6 @@ void mm_tst_cases(int NTRIALS, int Ndim, int Mdim, int Pdim,
 
    ave_t = ave_t/(double)NTRIALS;
    output_results(Ndim, Mdim, Pdim, nerr, ave_t, min_t, max_t);
+
+   free(Cref);
 }
