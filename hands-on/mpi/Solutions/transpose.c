@@ -367,6 +367,9 @@ int main(int argc, char ** argv)
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();
 
+  free(buff);
+  free(trans);
+  free(work);
 
 }  /* end of main */
 

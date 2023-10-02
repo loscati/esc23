@@ -280,6 +280,9 @@ int main(int argc, char **argv)
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();
 
+  free(x);
+  free(incoming);
+
 }  /* end of main */
 
 ///////********  Start Support functions ********///////////

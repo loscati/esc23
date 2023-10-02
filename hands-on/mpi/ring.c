@@ -133,7 +133,6 @@ int main(int argc, char **argv)
      x[i]   = (double) i;
      incoming[i] = -1.0;
   }
-
   MPI_Barrier(MPI_COMM_WORLD);
 #ifdef DEBUG
   printf("\n Node %d is beyond the barrier\n",my_ID);
@@ -185,6 +184,8 @@ int main(int argc, char **argv)
 *********************************************************************/
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();
+  free(x);
+  free(incoming);
 
 }  /* end of main */
 

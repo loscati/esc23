@@ -263,6 +263,9 @@ MPI_Send (buffer, buffer_count, MPI_LONG, 0, MTag_4, MPI_COMM_WORLD);
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();
 
+  free(incoming);
+  free(tp);
+  free(result);
 
 }  /* end of main */
 

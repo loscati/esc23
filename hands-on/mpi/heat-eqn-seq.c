@@ -48,5 +48,7 @@ int main(void) {
 
         printValues(uk, k);
     }
+    free(uk);
+    free(ukp1);
     return 0;
 }

@@ -239,6 +239,9 @@ int main(int argc, char ** argv)
      errsq_sendrcv +=  test_results (my_ID, Block_order, Global_order, 
 		                             trans);
 
+     free(buff);
+     free(trans);
+     free(work);
    }  /* end of iters loop  */
 
 /*********************************************************************

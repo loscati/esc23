@@ -130,5 +130,8 @@ int main(int argc, char *argv[]) {
     
     /* clean up and end */
     MPI_Finalize();
+
+    free(uk);
+    free(ukp1);
     return 0;
 }
