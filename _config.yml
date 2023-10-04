@@ -1,7 +1,7 @@
 highlighter: rouge
 baseurl: /esc23
 menu_header: ESC23
-exercises_repo: https://github.com/infn-esc/esc23/blob/master
+exercises_repo: https://github.com/infn-esc/esc23/blob/main
 menu:
   -
     name: basic
@@ -11,8 +11,6 @@ menu:
       label: Environment
     - name: compiling
       label: Compiling
-    - name: formatting
-      label: Formatting
   - name: architecture
     label: ARCHITECTURE
     items:
@@ -33,8 +31,6 @@ menu:
       label: Move operations
     - name: rvo
       label: Return Value Optimization
-    - name: layout
-      label: Data layout in memory
     - name: containers
       label: Containers
     - name: compiletime
