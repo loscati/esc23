@@ -9,12 +9,11 @@ CPP         = g++-13
 CLINKER     = $(CC)
 CPPLINKER   = $(CPP)
 #OPTFLAGS   = -std=c11 -fopenmp -O3
-OPTFLAGS    = -O0
+OPTFLAGS    = -O0 -fopenmp
 LIBS        = -lm
 CFLAGS	  = $(OPTFLAGS)
 
-
-EXES = sum quad roundC roundCpp
+EXES = sum quad roundC roundCpp pi
 
 all: $(EXES)
 
@@ -30,11 +29,15 @@ roundC: roundC.o
 roundCpp: roundCpp.o
 	$(CPPLINKER) $(OPTFLAGS) -o  roundCpp roundCpp.o $(LIBS)
 
+pi: pi.o
+	$(CLINKER) $(OPTFLAGS) -o pi pi.o $(LIBS)
+
 test: $(EXES)
 	./sum
 	./quad
 	./roundC
 	./roundCpp
+	./pi
 
 clean:
 	rm -rf $(EXES) *.o
