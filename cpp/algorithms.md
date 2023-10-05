@@ -17,7 +17,7 @@ generates and prints a vector of randomly-chosen integer numbers.
 Build it and run it a few times to verify that it works as expected:
 
 ```shell
-$ cd esc/hands-on/cpp
+$ cd esc23/hands-on/cpp
 $ g++ -O3 -Wall -Wextra -o algo algo.cpp
 $ ./algo
 ...
@@ -70,6 +70,7 @@ Modify the program
 to:
 
 * multiply all the elements of the vector
+* compute the mean and the standard deviation
 * sort the vector in descending order
 * move the even numbers to the beginning
 * create another vector with the squares of the numbers in the first vector
