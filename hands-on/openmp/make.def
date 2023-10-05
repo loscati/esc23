@@ -13,7 +13,7 @@ CC          = gcc-13
 
 # These definitions should work on any system
 CLINKER     = $(CC)
-OPTFLAGS    = -std=c11 -fopenmp -O3 -DAPPLE
+OPTFLAGS    = -std=c11 -fopenmp -O0 -DAPPLE
 LIBS        = -lm
 PRE         = ./
 

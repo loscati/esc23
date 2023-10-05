@@ -52,7 +52,7 @@
 #include <stdio.h>
 #include <omp.h>
 #include <stdlib.h>
-#include <immintrin.h>
+//#include <immintrin.h>
 
 #define NSTEPS (512*512*32)
 
@@ -72,18 +72,18 @@
 float pi_reg_default(int  num_steps)  // literals take default type .. double
 {
    int i, j;
-   float  step, x, pi, sum = 0.0;
+   double step, x, pi, sum = 0.0;
    double start_time, run_time;
    double min, max, ave;
    min = BIG;  max = SMALL; ave = 0.0;
 
-   step = 1.0/((float) num_steps);
+   step = 1.0/(num_steps);
    for (j=0;j<NTRIALS;j++){
    start_time = wtime();
    sum = 0.0;
 
-   for (i=1;i<= num_steps; i++){
-      x = (i-0.5)*step;
+   for (i=0;i< num_steps; i++){
+      x = (i+0.5)*step;
       sum = sum + 4.0/(1.0+x*x);
    }
 
@@ -92,7 +92,7 @@ float pi_reg_default(int  num_steps)  // literals take default type .. double
 
    ave+=run_time; if(run_time<min)min=run_time; if(run_time>max)max=run_time;
    }  //end of loop over trials
-   printf("\n Base default  %d steps %f: ave=%f min=%f max=%f secs ",
+   printf("\n Base (double) %d steps %f: ave=%f min=%f max=%f secs ",
                            num_steps,pi,(ave/(double)NTRIALS),min,max);
 
    return pi;
@@ -102,7 +102,7 @@ float pi_reg_float(int  num_steps) // literals explicity made float
 {
    int i, j;
 //   double step, x, pi, sum = 0.0;
-   float  step, x, pi, sum = 0.0;
+   float  step, x, pi, sum = 0.0f;
    double start_time, run_time;
    double min, max, ave;
    min = BIG;  max = SMALL; ave = 0.0;
@@ -112,8 +112,8 @@ float pi_reg_float(int  num_steps) // literals explicity made float
    start_time = wtime();
    sum = 0.0f;
 
-   for (i=1;i<= num_steps; i++){
-      x = (i-0.5f)*step;
+   for (i=0;i< num_steps; i++){
+      x = (i+0.5f)*step;
       sum = sum + 4.0f/(1.0f+x*x);
    }
 
@@ -122,7 +122,7 @@ float pi_reg_float(int  num_steps) // literals explicity made float
 
    ave+=run_time; if(run_time<min)min=run_time; if(run_time>max)max=run_time;
    }  //end of loop over trials
-   printf("\n Base float    %d steps %f: ave=%f min=%f max=%f secs ",
+   printf("\n Base (float)  %d steps %f: ave=%f min=%f max=%f secs ",
                     num_steps,pi,(ave/(double)NTRIALS),min,max);
 
    return pi;
@@ -132,7 +132,7 @@ float pi_reg_float(int  num_steps) // literals explicity made float
 float pi_unroll(int  num_steps)
 {
    int i,j;
-   float step, x0, x1, x2, x3, pi, sum = 0.0;
+   float step, x0, x1, x2, x3, pi, sum = 0.0f;
    double start_time, run_time;
    double min, max, ave;
    min = BIG;  max = SMALL; ave = 0.0;
@@ -143,11 +143,11 @@ float pi_unroll(int  num_steps)
       start_time = wtime();
       sum=0.0;
 
-      for (i=1;i<= num_steps; i=i+4){
-         x0 = (i-0.5f)*step;
-         x1 = (i+0.5f)*step;
+      for (i=0;i< num_steps; i=i+4){
+         x0 = (i+0.5f)*step;
+         x1 = (i+1.0f)*step;
          x2 = (i+1.5f)*step;
-         x3 = (i+2.5f)*step;
+         x3 = (i+2.0f)*step;
          sum = sum + 4.0f*(1.0f/(1.0f+x0*x0) + 1.0f/(1.0f+x1*x1)  + 
                        1.0f/(1.0f+x2*x2)  + 1.0f/(1.0f+x3*x3));
       }
@@ -164,6 +164,7 @@ float pi_unroll(int  num_steps)
 }	  
 
 // unroll loop, use SSE for loop body
+/*
 float pi_sse(int  num_steps)   
 {
    int i,j;
@@ -206,6 +207,8 @@ float pi_sse(int  num_steps)
                                           num_steps,pi,ave/NTRIALS,min,max);
    return pi;
 }	  
+
+
 
 // unroll loop, use SSE for loop body and parallel omp
 float pi_sse_par(int  num_steps)
@@ -261,6 +264,8 @@ float pi_sse_par(int  num_steps)
    return pi;
 }	  
 
+*/
+
 float pi_omp_simd (int  num_steps)
 {
    int i, j;
@@ -275,10 +280,9 @@ float pi_omp_simd (int  num_steps)
    start_time = wtime();
    sum = 0.0f;
 
-   x0 = -0.5*step;
    #pragma omp simd private(x) reduction(+:sum) 
-   for (i=1;i<= num_steps; i++){
-      x = x0 + (float)(i)*step;
+   for (i=0;i< num_steps; i++){
+      x = (i+0.5f)*step;
       sum = sum + 4.0f/(1.0f+x*x);
    }
 
@@ -307,10 +311,9 @@ float pi_omp_par_simd (int  num_steps)
    start_time = wtime();
    sum = 0.0f;
 
-   x0 = -0.5f*step;
    #pragma omp parallel for simd private(x) reduction(+:sum)
-   for (i=1;i<= num_steps; i++){
-      x = x0 + (float)(i)*step;
+   for (i=0;i< num_steps; i++){
+      x = (i+0.5f)*step;
       sum = sum + 4.0f/(1.0f+x*x);
    }
 
@@ -403,8 +406,8 @@ int main()
   float pi_val1    = pi_reg_default (num_steps);
   float pi_val2    = pi_reg_float   (num_steps);
   float pi_val3    = pi_unroll      (num_steps);
-  float pi_val4    = pi_sse         (num_steps);
-  float pi_val7    = pi_sse_par     (num_steps);
+//  float pi_val4    = pi_sse         (num_steps);
+//  float pi_val7    = pi_sse_par     (num_steps);
   float pi_val5    = pi_omp_simd    (num_steps);
   float pi_val6    = pi_omp_par_simd(num_steps);
 //  float pi_val8    = pi_avx         (num_steps);
