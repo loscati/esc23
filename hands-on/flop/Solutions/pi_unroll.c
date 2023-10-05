@@ -23,7 +23,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
-//#include <immintrin.h>
+
+// compile with -march=native 
+#include <immintrin.h>
 
 #define NSTEPS (512*512*32)
 
@@ -164,13 +166,8 @@ float pi_unroll_double(int  num_steps)
    return pi;
 }
 
-//**********************************************************************
-//  the following explicit vector functions are skipped since they are
-//  dependent on the specific x86 CPU and are not portable.
-
 // unroll loop, use SSE for loop body
-/*
-float pi_sse(int  num_steps)   
+float pi_sse(int  num_steps)
 {
    int i,j;
    float step, pi;
@@ -189,11 +186,11 @@ float pi_sse(int  num_steps)
    __m128 four   = _mm_load1_ps(&scalar_four);
    __m128 vstep  = _mm_load1_ps(&step);
    __m128 sum    = _mm_load1_ps(&scalar_zero);
-   __m128 xvec; 
-   __m128 denom; 
-   __m128 eye; 
+   __m128 xvec;
+   __m128 denom;
+   __m128 eye;
 
-   // unroll loop 4 times ... assume num_steps%4 = 0
+  // unroll loop 4 times ... assume num_steps%4 = 0
    for (i=0;i< num_steps; i=i+4){
       ival  = (float)i;
       eye   = _mm_load1_ps(&ival);
@@ -208,12 +205,10 @@ float pi_sse(int  num_steps)
    ave+=run_time; if(run_time<min)min=run_time; if(run_time>max)max=run_time;
 
    }
-   printf("\n SSE           %d steps %f: ave=%f min=%f max=%f secs ",
+   printf("\n SSE (float)       %d steps %f: ave=%f min=%f max=%f secs ",
                                           num_steps,pi,ave/NTRIALS,min,max);
    return pi;
-}	  
-
-*/
+}
 
 // unroll loop, use AVX for loop body and parallel omp
 /*   <<<< skip function.  Not all compilers support AVX >>>
@@ -290,9 +285,9 @@ int main()
   float pi_val2    = pi_reg_float     (num_steps);
   float pi_val3    = pi_unroll_float  (num_steps);
   float pi_val4    = pi_unroll_double (num_steps);
-//  float pi_val4    = pi_sse         (num_steps);
-//  float pi_val7    = pi_sse_par     (num_steps);
-//  float pi_val8    = pi_avx         (num_steps);
+  float pi_val5    = pi_sse           (num_steps);
+//  float pi_val6    = pi_sse_par     (num_steps);
+//  float pi_val7    = pi_avx         (num_steps);
   printf("\n");
 
 }
