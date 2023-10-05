@@ -68,8 +68,8 @@ float KahanSum(int Nlen, float *x)
    if(Nlen < 1) return -1;  // need at least two values to sum
 
    correction = 0.0f;
-   ksum = x[0];
-   for (int i = 1; i<Nlen;i++){
+   ksum = 0.0f;
+   for (int i = 0; i<Nlen;i++){
       xcorrected = x[i] - correction; 
       tmpSum =  ksum + xcorrected;
       correction = (tmpSum - ksum) - xcorrected;
