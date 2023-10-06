@@ -58,6 +58,8 @@ menu:
   - name: parallelism
     label: PARALLELISM
     items:
+    - name: auto_vectorization
+      label: Automatic vectorization
     - name: parcpp
       label: Parallel C++
     - name: cuda
