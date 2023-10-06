@@ -60,8 +60,8 @@ menu:
     items:
     - name: auto_vectorization
       label: Automatic vectorization
-    - name: parcpp
-      label: Parallel C++
+    - name: stdthreads_tbb
+      label: threads and tbb
     - name: cuda
       label: CUDA
     - name: mpi

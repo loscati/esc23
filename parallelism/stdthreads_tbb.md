@@ -8,52 +8,7 @@ section: parallelism
 ```bash
 module load compilers/gcc-12.3_sl7
 ```
-### Automatic Vectorization
-
-```C++
-#pragma GCC optimize("O2", "unroll-loops", "omit-frame-pointer", "inline",     \
-                     "tree-vectorize") // Optimization flags
-#pragma GCC option("arch=native", "tune=native", "no-zero-upper") // Enable AVX
-#pragma GCC target("avx")                                         // Enable AVX
-#include <chrono>
-#include <iostream>
-#include <vector>
-
-int main() {
-  const int N = 200000;     // Array Size
-  const int nTests = 20000; // Number of tests
-  std::vector<float> a(N), b(N), c(N), result(N);
-  auto now = std::chrono::high_resolution_clock::now();
-  for (int i = 0; i < N; ++i) // Data initialization
-  {
-    a[i] = ((float)i) + 12.2f;
-    b[i] = -21.50f * ((float)i) + 0.9383f;
-    c[i] = 120.33f * ((float)i) + 9.1172f;
-  }
-  for (int i = 0; i < nTests; ++i) {
-    for (int j = 0; j < N; ++j) {
-      result[j] = a[j] - b[j] + c[j] + 42 * (float)i;
-    }
-  }
-  auto end_time = std::chrono::duration_cast<std::chrono::duration<double>>(
-                      std::chrono::high_resolution_clock::now() - now)
-                      .count();
-  std::cout << "Time spent: " << end_time << "s" << std::endl;
-  return 0;
-}
-```
-
-Compile with:
-```
-g++ vectorization.cpp -fopt-info-vec-optimized -o vectorization
-./vectorization
-```
-
-Try removing `tree-vectorize` or replacing `O2` with `O3`.
-Play with the loops to understand what breaks it.
-
-
-### Hello World
+### Hello World by `std::threads`
 ```C++
 #include <thread>
 #include <iostream>
@@ -102,7 +57,8 @@ int main(){
   std::vector<int> input;
   input.reserve(numElements);
 
-  std::mt19937 engine;
+  std::random_device rd;  // a seed source for the random number engine
+  std::mt19937 gen(rd()); // mersenne_twister_engine seeded with rd()  
   std::uniform_int_distribution<> uniformDist(-5,5);
   for ( unsigned int i=0 ; i< numElements ; ++i) input.emplace_back(uniformDist(engine));
 
@@ -114,16 +70,16 @@ int main(){
     }
   };
 
-  auto start = std::chrono::system_clock::now();
+  auto start = std::chrono::steady_clock::now();
   f(0,numElements);
-  std::chrono::duration<double> dur= std::chrono::system_clock::now() - start;
+  std::chrono::duration<double> dur= std::chrono::steady_clock::now() - start;
   std::cout << "Time spent in reduction: " << dur.count() << " seconds" << std::endl;
   std::cout << "Sum result: " << sum << std::endl;
   return 0;
 }
 ```
 
-### Quickly create threads
+### Quickly create `std::threads`
 ```C++
 unsigned int n = std::thread::hardware_concurrency();
 std::vector<std::thread> v;
@@ -143,14 +99,14 @@ for (auto& t : v) {
 
 int main()
 {
-  double sum = 0.;
+  auto sum = 0.;
   unsigned int num_steps = 1 << 22;
-  double pi = 0.0;
-  double step = 1.0/(double) num_steps;
+  auto pi = 0.0;
+  double step = 1./(double) num_steps;
   auto start = std::chrono::steady_clock::now();
-  for (int i=0; i< num_steps; i++){
+  for (int i=0; i<num_steps; i++){
     auto  x = (i+0.5)*step;
-    sum = sum + 4.0/(1.0+x*x);
+    sum = sum + 4./(1.+x*x);
   }
   auto stop = std::chrono::steady_clock::now();
   std::chrono::duration<double> dur= stop - start;
@@ -161,8 +117,6 @@ int main()
 }
 
 ```
-
-
 
 
 ### Exercise 3. pi with Montecarlo
@@ -184,13 +138,13 @@ The ratio between `Nin` and `N` converges to the ratio between the areas.
 
 Download and extract the latest release for Intel oneTBB:
 ```bash
-wget https://github.com/oneapi-src/oneTBB/releases/download/v2021.6.0/oneapi-tbb-2021.6.0-lin.tgz
-tar -xzf oneapi-tbb-2021.6.0-lin.tgz
+wget https://github.com/oneapi-src/oneTBB/releases/download/v2021.10.0/oneapi-tbb-2021.10.0-lin.tgz
+tar -xzf oneapi-tbb-2021.10.0-lin.tgz
 ```
 Let's now set the environment to use this version of oneTBB.
 ```bash
-module load compilers/gcc-9.2.0_sl7
-source oneapi-tbb-2021.6.0/env/vars.sh intel64 linux auto_tbbroot
+module load compilers/gcc-12.3_sl7
+source oneapi-tbb-2021.10.0/env/vars.sh intel64 linux auto_tbbroot
 echo $TBBROOT
 ```
 
