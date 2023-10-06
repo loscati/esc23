@@ -10,7 +10,7 @@ module load compilers/gcc-12.3_sl7
 ```
 ### Automatic Vectorization
 
-```C++
+```cpp
 #pragma GCC optimize("O2", "unroll-loops", "omit-frame-pointer", "inline",     \
                      "tree-vectorize") // Optimization flags
 #pragma GCC option("arch=native", "tune=native", "no-zero-upper") // Enable AVX
