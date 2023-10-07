@@ -260,3 +260,10 @@ int main() {
   return 0;
 }
 ```
+
+
+### Solutions
+
+Some possible solutions to the exercises are posted here: 
+
+[https://github.com/infn-esc/esc23/tree/main/hands-on/stdthreads_tbb](https://github.com/infn-esc/esc23/tree/main/hands-on/stdthreads_tbb)
