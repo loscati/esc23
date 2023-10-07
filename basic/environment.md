@@ -121,7 +121,7 @@ Last login: ...
 [studentN@hpc-201-11-40 ~]$ 
 ```
 
-Your shell is [`bash`](https://www.gnu.org/s/bash). We suggest that you copy a skeleton for the shell configuration files in your home directory:
+Your shell is [`bash`](https://www.gnu.org/s/bash). Copy a skeleton for the shell configuration files in your home directory:
 
 ```shell
 [studentN@hpc-201-11-40 ~]$ cp /etc/skel/.bash* ~

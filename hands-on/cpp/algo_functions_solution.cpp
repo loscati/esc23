@@ -6,6 +6,7 @@
 #include <numeric>
 #include <functional>
 #include <cassert>
+#include <tuple>
 
 std::ostream& operator<<(std::ostream& os, std::vector<int> const& c);
 std::vector<int> make_vector(int N);
@@ -19,6 +20,19 @@ int main()
   std::cout << "product = "
             << std::accumulate(std::begin(v), std::end(v), 1LL, std::multiplies<>{})
             << '\n';
+
+  // compute the mean and the standard deviation
+  auto [sum_x, sum_x2] = std::accumulate(
+    v.begin(), v.end(),
+    std::make_pair(0LL, 0LL),
+    [](auto a, auto e) {
+      return std::make_pair(a.first + e, a.second + e * e);
+    }
+  );
+  sum_x /= static_cast<double>(v.size());
+  sum_x2 /= static_cast<double>(v.size());
+
+  std::cout << "mean: " << sum_x << " stddev: " << std::sqrt(sum_x2 - sum_x * sum_x) << '\n';
 
   // sort the vector in descending order
   std::sort(std::begin(v), std::end(v), std::greater<>{});
