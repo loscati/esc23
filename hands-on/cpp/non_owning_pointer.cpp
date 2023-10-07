@@ -1,4 +1,6 @@
 #include <memory>
+#include <cstdlib>
+#include <cstring>
 
 char* some_api();
 
@@ -6,7 +8,7 @@ int main()
 {
   auto* p = some_api();
 
-  // free(p);
+  // std::free(p);
   // delete p;
   // delete [] p;
 }
@@ -16,5 +18,5 @@ int main()
 
 char* some_api() {
   static char s[] = "Hello, world!";
-  return strstr(s, "orl");
+  return std::strstr(s, "orl");
 }
