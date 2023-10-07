@@ -51,32 +51,32 @@ std::cout << dur.count() << " seconds" << std::endl;
 #include <chrono>
 
 int main(){
-
-  const unsigned int numElements= 100000000;   
-
-  std::vector<int> input;
-  input.reserve(numElements);
-
-  std::random_device rd;  // a seed source for the random number engine
-  std::mt19937 gen(rd()); // mersenne_twister_engine seeded with rd()  
-  std::uniform_int_distribution<> uniformDist(-5,5);
-  for ( unsigned int i=0 ; i< numElements ; ++i) input.emplace_back(uniformDist(engine));
-
-  long long int sum= 0;
-
-  auto f= [&](unsigned long long firstIndex, unsigned long long lastIndex){
-    for (auto it= firstIndex; it < lastIndex; ++it){
-        sum+= input[it];
-    }
-  };
-
-  auto start = std::chrono::steady_clock::now();
-  f(0,numElements);
-  std::chrono::duration<double> dur= std::chrono::steady_clock::now() - start;
-  std::cout << "Time spent in reduction: " << dur.count() << " seconds" << std::endl;
-  std::cout << "Sum result: " << sum << std::endl;
-  return 0;
-}
+  
+    const unsigned int numElements= 100000000;   
+  
+    std::vector<int> input;
+    input.reserve(numElements);
+  
+    std::random_device rd;  // a seed source for the random number engine
+    std::mt19937 engine(rd()); // mersenne_twister_engine seeded with rd()  
+    std::uniform_int_distribution<> uniformDist(-5,5);
+    for ( unsigned int i=0 ; i< numElements ; ++i) input.emplace_back(uniformDist(engine));
+  
+    long long int sum= 0;
+  
+    auto f= [&](unsigned long long firstIndex, unsigned long long lastIndex){
+      for (auto it= firstIndex; it < lastIndex; ++it){
+          sum+= input[it];
+      }
+    };
+  
+    auto start = std::chrono::steady_clock::now();
+    f(0,numElements);
+    std::chrono::duration<double> dur= std::chrono::steady_clock::now() - start;
+    std::cout << "Time spent in reduction: " << dur.count() << " seconds" << std::endl;
+    std::cout << "Sum result: " << sum << std::endl;
+    return 0;
+}  
 ```
 
 ### Quickly create `std::threads`
@@ -195,7 +195,6 @@ int main() {
         oneapi::tbb::blocked_range<size_t>(0, N),
         [=](const oneapi::tbb::blocked_range<size_t> &r) {
           for (auto i = r.begin(); i < r.end(); ++i) {
-
             std::cout << "Hello World from element " << i << std::endl;
           }
           std::cout << "Number of threads in the task_arena: "
