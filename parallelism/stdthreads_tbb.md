@@ -150,7 +150,7 @@ echo $TBBROOT
 
 To compile and link:
 ```bash
-g++ -O2 algo_par.cpp  -ltbb
+g++ yourprogram.cpp  -ltbb -std=c++20 -o yourprogram
 ```
 Let's check that you can compile a simple tbb program:
 
@@ -166,7 +166,7 @@ Let's check that you can compile a simple tbb program:
 int main() {
   // Get the default number of threads
   int num_threads = oneapi::tbb::info::default_concurrency();
-  int N = 100;
+  int N = 10;
   std::cout << "Use indices: " << std::endl;
   // Run the default parallelism
   oneapi::tbb::parallel_for(0, N, [=](int i) {
