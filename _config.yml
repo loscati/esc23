@@ -66,3 +66,13 @@ menu:
       label: CUDA
     - name: mpi
       label: MPI
+  -
+    name: memory
+    label: Memory Management 
+    items:
+    - name: basics 
+      label: Basics 
+    - name: datastructure 
+      label: Datastructure 
+    - name: allocator
+      label: Allocators 
