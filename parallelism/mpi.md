@@ -28,7 +28,7 @@ $ ls .bash_profile .bashrc
   `compilers/gcc-12.3_sl7` and `compilers/openmpi-4-1-5_gcc12.3`
 
 ```shell
-echo 'module load compilers/gcc-12.2_sl7 compilers/openmpi-4-1-4_gcc12.2' >> .bashrc
+echo 'module load compilers/gcc-12.3_sl7 compilers/openmpi-4-1-5_gcc12.3' >> .bashrc
 ```
 
 - Modify (or create from scratch if not existing) the `.ssh/config` file so that it contains the following:
