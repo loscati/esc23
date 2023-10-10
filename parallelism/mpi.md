@@ -4,21 +4,52 @@ layout: main
 section: parallelism
 ---
 
-Check that your environment is correctly configured to compile and run MPI code.
+Your environment needs to be correctly configured in order to compile and run
+MPI code. The following instructions assume that you are in your home directory
+on `hpc-200-11-40`.
 
 ```shell
-$ module load compilers/gcc-12.2_sl7 compilers/openmpi-4-1-4_gcc12.2
-$ mpic++ -v
-g++ (GCC) 12.2.1 20221004
-Copyright (C) 2022 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-$ which mpirun
-/shared/software/compilers/openmpi-4.1.4_gcc12.2/bin/mpirun
+$ hostname
+hpc-201-11-40.cr.cnaf.infn.it
+$ pwd
+/home/HPC/studentN
 ```
 
-Note that for MPI we will use the `gcc` v. 12 compiler.
+- Be sure to have the `bash` initialization files in your home directory, as
+  recommended when we [set up the
+  environment]({{site.baseurl}}/basic/environment.html)
+
+```shell
+$ ls .bash_profile .bashrc
+.bash_profile .bashrc
+```
+
+- Add at the end of `.bashrc` the loading of the modules
+  `compilers/gcc-12.3_sl7` and `compilers/openmpi-4-1-5_gcc12.3`
+
+```shell
+echo 'module load compilers/gcc-12.2_sl7 compilers/openmpi-4-1-4_gcc12.2' >> .bashrc
+```
+
+- Exit from the machine and login again, **being sure to forward the SSH
+  agent**. Check that the environment is correct.
+
+```shell
+$ hostname
+hpc-201-11-40.cr.cnaf.infn.it
+$ ssh-add -l
+3072 SHA256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx student30@esc (RSA)
+...
+$ gcc --version
+gcc (GCC) 12.3.0
+...
+$ mpicc --version
+gcc (GCC) 12.3.0
+...
+$ mpirun --version
+mpirun (Open MPI) 4.1.5
+...
+```
 
 Examples and exercises are available in the
 [`hands-on/mpi`]({{site.exercises_repo}}/hands-on/mpi) directory. Follow the
