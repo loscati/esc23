@@ -1,0 +1,1 @@
+- Video by Depth-buffer on Youtube about [how to optimize matrix multiplication](https://www.youtube.com/watch?v=QGYvbsHDPxo&t=0s). Great visualizations and explanation about the concepts of spatial and temporal locality of data that allows for an efficient memory usage. Plus, some linear algebra tricks. 
